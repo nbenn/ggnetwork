@@ -205,8 +205,13 @@ format_fortify <- function(
     if ("na" %in% colnames(edges)) edges$na <- NULL
 
     # merge edges and nodes data
-    edges <- merge(nodes, edges, by = c("x", "y"), all = TRUE)
-
+    edges <- merge(
+      nodes[, c("x", "y", setdiff(colnames(nodes), colnames(edges)))],
+      edges,
+      by = c("x", "y"),
+      all = TRUE
+    )
+    
     # add missing columns to nodes data
     nodes$xend <- nodes$x
     nodes$yend <- nodes$y
